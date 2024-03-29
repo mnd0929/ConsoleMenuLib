@@ -95,7 +95,7 @@ namespace ConsoleToolsCollection.ConsoleSelector
 
         private void ShowPage()
         {
-            if (Settings.MaxHeight != -1 && Settings.MaxHeight != 0)
+            if (Settings.MaxHeight > 0)
             {
                 PagesCount = Items.Count % Settings.MaxHeight == 0 ? Items.Count / Settings.MaxHeight : Items.Count / Settings.MaxHeight + 1;
                 CurrentPage = SelectedItemIndex / Settings.MaxHeight;
@@ -148,8 +148,8 @@ namespace ConsoleToolsCollection.ConsoleSelector
 
         private void HideSelector()
         {
-            for (int i = 0; i < Items.Count; i++)
-                ColorConsole.WriteLine(Helpers.StringHelper.Repeat(" ", Console.WindowWidth));
+            for (int i = 0; i < Items.Count + 2; i++)
+                Console.Write(Helpers.StringHelper.Repeat(" ", Console.WindowWidth));
         }
     }
 }
