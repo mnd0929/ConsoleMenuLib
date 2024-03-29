@@ -1,1 +1,47 @@
-# ConsoleMenu
+# ConsoleSelector
+
+**Создание меню**
+```csharp
+ConsoleSelector consoleSelector = new ConsoleSelector
+{
+    Indentations = new ConsoleSelectorIndentations
+    {
+        SelectionIndentationRight = 20,
+        SelectionIndentationLeft = 20,
+        TextIndentation = 3
+    },
+    Settings = new ConsoleSelectorSettings
+    {
+        MaxHeight = 20 // Максимальное колличество одновременно отображаемых элементов на экране. (По умолчанию ображаются все элементы сразу)
+    },
+    Keys = new ConsoleSelectorKeys 
+    {
+        Up = ConsoleKey.W,
+        Down = ConsoleKey.S,
+        Accept = ConsoleKey.Enter
+    }
+};
+```
+
+
+**Добавление элементов**
+```csharp
+consoleSelector.Items.Add(new ConsoleSelectorItem($"GitHub", action: () =>
+{
+    Process.Start("https://github.com/");
+}));
+```
+```csharp
+consoleSelector.Items.Add(new ConsoleSelectorItem 
+{
+    Title = "GitHub",
+    Description = "Открыть GitHub",
+    Tag = "https://github.com/"
+});
+```
+
+
+**Отображение меню и получение выбранного элемента**
+```csharp
+ConsoleSelectorItem consoleSelectorItem = consoleSelector.ShowSelector();
+```
