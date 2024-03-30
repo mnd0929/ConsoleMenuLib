@@ -120,7 +120,7 @@ namespace ConsoleToolsCollection.ConsoleSelector
                 string modifyedText = string.Concat(
 
                     // Отступ текста
-                    Helpers.StringHelper.Repeat(Indentations.IndentationString, Indentations.TextIndentation),
+                    Helpers.StringHelper.Repeat(Indentations.RepeatingLine, Indentations.Text),
 
                     // Начальные префиксы
                     Settings.DefaultPrefix, isActive ? Settings.ActivePrefix : Settings.NotActivePrefix,
@@ -132,13 +132,13 @@ namespace ConsoleToolsCollection.ConsoleSelector
                     Settings.FinalString);
 
                 // Левый отступ
-                if (Indentations.SelectionIndentationLeft != -1)
-                    Console.SetCursorPosition(Indentations.SelectionIndentationLeft, Console.CursorTop);
+                if (Indentations.SelectionLeft != -1)
+                    Console.SetCursorPosition(Indentations.SelectionLeft, Console.CursorTop);
 
                 // Правый отступ
-                if (Indentations.SelectionIndentationRight != -1 && Console.WindowWidth > Indentations.SelectionIndentationRight)
-                    modifyedText += Helpers.StringHelper.Repeat(Indentations.IndentationString,
-                        Console.WindowWidth - Indentations.SelectionIndentationRight - modifyedText.Length - Indentations.SelectionIndentationLeft);
+                if (Indentations.SelectionRight != -1 && Console.WindowWidth > Indentations.SelectionRight)
+                    modifyedText += Helpers.StringHelper.Repeat(Indentations.RepeatingLine,
+                        Console.WindowWidth - Indentations.SelectionRight - modifyedText.Length - Indentations.SelectionLeft);
 
                 Helpers.ColorConsole.WriteLine(modifyedText,
                     isActive ? Colors.ActiveForegroundColor : Colors.DefaultForegroundColor,

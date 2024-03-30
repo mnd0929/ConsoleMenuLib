@@ -14,13 +14,14 @@ namespace ConsoleMenuTests
             {
                 Indentations = new ConsoleSelectorIndentations
                 {
-                    SelectionIndentationRight = 20,
-                    SelectionIndentationLeft = 20,
-                    TextIndentation = 3
+                    SelectionRight = 20,
+                    SelectionLeft = 20,
+                    Text = 3
                 },
                 Settings = new ConsoleSelectorSettings
                 {
-                    MaxHeight = 20
+                    MaxHeight = 20,
+                    HideMenuAfterSelecting = true,
                 }
             };
 
