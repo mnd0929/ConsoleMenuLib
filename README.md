@@ -1,4 +1,4 @@
-# ConsoleSelector
+# ConsoleMenu
 
 **Создание меню**
 ```csharp
