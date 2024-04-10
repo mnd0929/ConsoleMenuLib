@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Threading;
+using System.Linq;
 using ConsoleToolsCollection.ConsoleSelector;
+using ConsoleToolsCollection.ConsoleSelector.Editors;
 
 namespace ConsoleMenuTests
 {
@@ -8,8 +9,6 @@ namespace ConsoleMenuTests
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("МАНКАРАФТ 2D ОНЛАЙН БЕСПЛАТНО БЕЗ РЕГИСТРАЦИИ И СМС ИГРАТЬ С ВИРУСАМИ И БОМЖАМИ: \r\n");
-
             ConsoleSelector consoleSelector = new ConsoleSelector
             {
                 Indentations = new ConsoleSelectorIndentations
@@ -25,26 +24,12 @@ namespace ConsoleMenuTests
                 }
             };
 
-            consoleSelector.Items.Add(new ConsoleSelectorItem($"Играть", action: () =>
+            for (int i = 0; i < 23; i++)
             {
-                Console.WriteLine("Хрен тебе, а не игрушечки-погремушечки");
-            }));
+                consoleSelector.Items.Add(new ConsoleSelectorItem($"{i} // {string.Concat(Enumerable.Repeat("-", 100))}"));
+            }
 
-            consoleSelector.Items.Add(new ConsoleSelectorItem($"Настройки", action: () =>
-            {
-                Console.WriteLine("Мозги себе настрой");
-            }));
-
-            consoleSelector.Items.Add(new ConsoleSelectorItem($"Выход", action: () =>
-            {
-                Console.WriteLine("Ну и пшел ты нафег");
-
-                Thread.Sleep(1000);
-
-                Environment.Exit(0);
-            }));
-
-            consoleSelector.ShowSelector();
+            consoleSelector.Show();
         }
     }
 }

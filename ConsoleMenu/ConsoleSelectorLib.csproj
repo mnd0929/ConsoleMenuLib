@@ -47,6 +47,7 @@
     <Compile Include="ConsoleSelectorItem.cs" />
     <Compile Include="ConsoleSelectorKeys.cs" />
     <Compile Include="ConsoleSelectorSettings.cs" />
+    <Compile Include="Editors\ModelEditor.cs" />
     <Compile Include="Helpers\ColorConsole.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,5 @@
-﻿using ConsoleToolsCollection.ConsoleSelector.Helpers;
+﻿using System.Collections.Generic;
 using System;
-using System.Collections.Generic;
 
 namespace ConsoleToolsCollection.ConsoleSelector
 {
@@ -44,20 +43,22 @@ namespace ConsoleToolsCollection.ConsoleSelector
         /// <summary>
         /// Текущая страница (Если Settings.MaxHeight > 0)
         /// </summary>
-        public int CurrentPage { get; private set; } = 0;
+        public int CurrentPage { get; set; } = 0;
 
         /// <summary>
         /// Показать меню, дождаться выбора и вернуть выбранный элемент
         /// </summary>
         /// <returns>Выбранный элемент</returns>
-        public ConsoleSelectorItem ShowSelector()
+        public ConsoleSelectorItem Show()
         {
+            SelectedItemIndex = 0;
+
             Console.CursorVisible = false;
 
             int reservePosTop = Console.CursorTop;
             int reservePosLeft = Console.CursorLeft;
 
-            while (true) 
+            while (true)
             {
                 Console.SetCursorPosition(reservePosLeft, reservePosTop);
 
@@ -79,7 +80,7 @@ namespace ConsoleToolsCollection.ConsoleSelector
                     {
                         Console.SetCursorPosition(reservePosLeft, reservePosTop);
 
-                        HideSelector();
+                        Hide();
 
                         Console.SetCursorPosition(reservePosLeft, reservePosTop);
                     }
@@ -95,12 +96,15 @@ namespace ConsoleToolsCollection.ConsoleSelector
 
         private void ShowPage()
         {
-            if (Settings.MaxHeight > 0)
+            if (Settings.MaxHeight != -1 && Settings.MaxHeight != 0)
             {
                 PagesCount = Items.Count % Settings.MaxHeight == 0 ? Items.Count / Settings.MaxHeight : Items.Count / Settings.MaxHeight + 1;
                 CurrentPage = SelectedItemIndex / Settings.MaxHeight;
 
-                ShowRange(CurrentPage * Settings.MaxHeight, CurrentPage * Settings.MaxHeight + Settings.MaxHeight);
+                int startIndex = CurrentPage * Settings.MaxHeight;
+                int finishIndex = startIndex + Settings.MaxHeight;
+
+                ShowRange(startIndex, finishIndex);
             }
             else
             {
@@ -113,7 +117,13 @@ namespace ConsoleToolsCollection.ConsoleSelector
             for (int i = startIndex; i < finishIndex; i++)
             {
                 if (i > Items.Count - 1 || i < 0)
-                    break;
+                {
+                    Console.Write(string.Concat("\r", Helpers.StringHelper.Repeat(" ", Console.WindowWidth)));
+
+                    continue;
+                }
+
+                int maxTextLength = Console.WindowWidth - Indentations.SelectionRight - Indentations.SelectionLeft;
 
                 bool isActive = SelectedItemIndex == i;
 
@@ -131,6 +141,9 @@ namespace ConsoleToolsCollection.ConsoleSelector
                     // Конечные префиксы
                     Settings.FinalString);
 
+                // Сокращение строки
+                modifyedText = Helpers.StringHelper.TruncateString(modifyedText, maxTextLength);
+
                 // Левый отступ
                 if (Indentations.SelectionLeft != -1)
                     Console.SetCursorPosition(Indentations.SelectionLeft, Console.CursorTop);
@@ -146,10 +159,10 @@ namespace ConsoleToolsCollection.ConsoleSelector
             }
         }
 
-        private void HideSelector()
+        private void Hide()
         {
-            for (int i = 0; i < Items.Count + 2; i++)
-                Console.Write(Helpers.StringHelper.Repeat(" ", Console.WindowWidth));
+            for (int i = 0; i < Items.Count; i++)
+                Console.Write(string.Concat('\r', Helpers.StringHelper.Repeat(" ", Console.WindowWidth)));
         }
     }
 }
