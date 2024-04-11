@@ -43,5 +43,5 @@ consoleSelector.Items.Add(new ConsoleSelectorItem
 
 **Отображение меню и получение выбранного элемента**
 ```csharp
-ConsoleSelectorItem consoleSelectorItem = consoleSelector.ShowSelector();
+ConsoleSelectorItem consoleSelectorItem = consoleSelector.Show();
 ```
