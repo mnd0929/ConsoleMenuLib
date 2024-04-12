@@ -13,7 +13,7 @@ namespace ConsoleToolsCollection.ConsoleSelector
         /// <summary>
         /// Цвета элементов в меню
         /// </summary>
-        public ConsoleSelectorColors Colors { get; set; } = new ConsoleSelectorColors();
+        public ConsoleSelectorItemColors Colors { get; set; } = new ConsoleSelectorItemColors();
 
         /// <summary>
         /// Отступы элементов в меню
@@ -66,6 +66,7 @@ namespace ConsoleToolsCollection.ConsoleSelector
 
                 ConsoleKey key = Console.ReadKey(true).Key;
 
+                // Переключение активного элемента
                 if (key == Keys.Up && SelectedItemIndex - 1 >= 0)
                 {
                     SelectedItemIndex--;
@@ -74,16 +75,28 @@ namespace ConsoleToolsCollection.ConsoleSelector
                 {
                     SelectedItemIndex++;
                 }
+
+                // Переключение страниц
+                else if (key == Keys.Right)
+                {
+                    int correctIndex = SelectedItemIndex + Settings.MaxHeight;
+                    int maxIndex = Items.Count - 1;
+
+                    SelectedItemIndex = correctIndex < maxIndex ? correctIndex : maxIndex;
+                }
+                else if (key == Keys.Left)
+                {
+                    int correctIndex = SelectedItemIndex - Settings.MaxHeight;
+                    int minIndex = 0;
+
+                    SelectedItemIndex = correctIndex >= minIndex ? correctIndex : minIndex;
+                }
+
+                // Выбор элемента
                 else if (key == Keys.Accept)
                 {
                     if (Settings.HideMenuAfterSelecting)
-                    {
-                        Console.SetCursorPosition(reservePosLeft, reservePosTop);
-
-                        Hide();
-
-                        Console.SetCursorPosition(reservePosLeft, reservePosTop);
-                    }
+                        Hide(reservePosLeft, reservePosTop);
 
                     Console.CursorVisible = true;
 
@@ -153,16 +166,31 @@ namespace ConsoleToolsCollection.ConsoleSelector
                     modifyedText += Helpers.StringHelper.Repeat(Indentations.RepeatingLine,
                         Console.WindowWidth - Indentations.SelectionRight - modifyedText.Length - Indentations.SelectionLeft);
 
-                Helpers.ColorConsole.WriteLine(modifyedText,
-                    isActive ? Colors.ActiveForegroundColor : Colors.DefaultForegroundColor,
-                    isActive ? Colors.ActiveBackgroundColor : Colors.DefaultBackgroundColor);
+                ConsoleColor? foreColor = isActive ? Colors.ActiveForegroundColor : Colors.DefaultForegroundColor;
+                ConsoleColor? backColor = isActive ? Colors.ActiveBackgroundColor : Colors.DefaultBackgroundColor;
+
+                ConsoleSelectorItemColors customColors = Items[i].CustomColors;
+
+                if (customColors != null)
+                {
+                    (foreColor, backColor) = isActive ?
+                        (customColors.ActiveForegroundColor, customColors.ActiveBackgroundColor) : 
+                        (customColors.DefaultForegroundColor, customColors.DefaultBackgroundColor);
+                }
+
+                Helpers.ColorConsole.WriteLine(modifyedText, foreColor.Value, backColor.Value);
             }
         }
-
-        private void Hide()
+        public void Hide(int reservePosLeft, int reservePosTop)
         {
-            for (int i = 0; i < Items.Count; i++)
-                Console.Write(string.Concat('\r', Helpers.StringHelper.Repeat(" ", Console.WindowWidth)));
+            Console.SetCursorPosition(reservePosLeft, reservePosTop);
+
+            string line = string.Concat('\r', Helpers.StringHelper.Repeat(" ", Console.WindowWidth));
+            string text = Helpers.StringHelper.Repeat(line, Settings.MaxHeight);
+
+            Console.Write(text);
+
+            Console.SetCursorPosition(reservePosLeft, reservePosTop);
         }
     }
 }

@@ -8,13 +8,26 @@ namespace ConsoleToolsCollection.ConsoleSelector
 
         public ConsoleSelectorItem(Action action) => Action = action;
 
-        public ConsoleSelectorItem(string title, string description = null, object tag = null, Action action = null)
+        public ConsoleSelectorItem(object obj) => (Tag, Title) = (obj, obj as string);
+
+        public ConsoleSelectorItem(
+            string title, 
+            string description = null, 
+            object tag = null, 
+            Action action = null, 
+            ConsoleSelectorItemColors customColors = null)
         {
             Title = title;
             Description = description;
             Tag = tag;
             Action = action;
+            CustomColors = customColors;
         }
+
+        /// <summary>
+        /// Индивидуальный цвет элемента
+        /// </summary>
+        public ConsoleSelectorItemColors CustomColors { get; set; }
 
         /// <summary>
         /// Главный текст элемента

@@ -8,6 +8,10 @@ namespace ConsoleToolsCollection.ConsoleSelector
 
         public ConsoleKey Down { get; set; } = ConsoleKey.DownArrow;
 
+        public ConsoleKey Left { get; set; } = ConsoleKey.LeftArrow;
+
+        public ConsoleKey Right { get; set; } = ConsoleKey.RightArrow;
+
         public ConsoleKey Accept { get; set; } = ConsoleKey.Enter;
     }
 }

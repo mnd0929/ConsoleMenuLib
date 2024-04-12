@@ -2,7 +2,7 @@
 
 namespace ConsoleToolsCollection.ConsoleSelector
 {
-    public class ConsoleSelectorColors
+    public class ConsoleSelectorItemColors
     {
         /// <summary>
         /// Цвет текста активного элемента

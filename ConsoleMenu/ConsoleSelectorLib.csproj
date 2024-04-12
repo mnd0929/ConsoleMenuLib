@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleSelector.cs" />
-    <Compile Include="ConsoleSelectorColors.cs" />
+    <Compile Include="ConsoleSelectorItemColors.cs" />
     <Compile Include="ConsoleSelectorIndentations.cs" />
     <Compile Include="ConsoleSelectorItem.cs" />
     <Compile Include="ConsoleSelectorKeys.cs" />
