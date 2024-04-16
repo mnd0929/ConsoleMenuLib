@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Reflection;
 
 namespace ConsoleToolsCollection.ConsoleSelector
 {
@@ -9,21 +10,6 @@ namespace ConsoleToolsCollection.ConsoleSelector
         /// Элементы отображаемые в меню
         /// </summary>
         public List<ConsoleSelectorItem> Items { get; set; } = new List<ConsoleSelectorItem>();
-
-        /// <summary>
-        /// Цвета элементов в меню
-        /// </summary>
-        public ConsoleSelectorItemColors Colors { get; set; } = new ConsoleSelectorItemColors();
-
-        /// <summary>
-        /// Отступы элементов в меню
-        /// </summary>
-        public ConsoleSelectorIndentations Indentations { get; set; } = new ConsoleSelectorIndentations();
-
-        /// <summary>
-        /// Кнопки ответственные за управление в меню
-        /// </summary>
-        public ConsoleSelectorKeys Keys { get; set; } = new ConsoleSelectorKeys();
 
         /// <summary>
         /// Настройки меню
@@ -51,7 +37,10 @@ namespace ConsoleToolsCollection.ConsoleSelector
         /// <returns>Выбранный элемент</returns>
         public ConsoleSelectorItem Show()
         {
-            SelectedItemIndex = 0;
+            CorrectSelectedItemIndex();
+
+            if (Settings.ResetIndex)
+                SetSelectedItemIndex(0);
 
             Console.CursorVisible = false;
 
@@ -67,43 +56,50 @@ namespace ConsoleToolsCollection.ConsoleSelector
                 ConsoleKey key = Console.ReadKey(true).Key;
 
                 // Переключение активного элемента
-                if (key == Keys.Up && SelectedItemIndex - 1 >= 0)
+                if (key == Settings.Keys.Up)
                 {
-                    SelectedItemIndex--;
+                    SetSelectedItemIndex(SelectedItemIndex - 1);
                 }
-                else if (key == Keys.Down && SelectedItemIndex + 1 < Items.Count)
+                else if (key == Settings.Keys.Down)
                 {
-                    SelectedItemIndex++;
+                    SetSelectedItemIndex(SelectedItemIndex + 1);
                 }
 
                 // Переключение страниц
-                else if (key == Keys.Right)
+                else if (key == Settings.Keys.Right)
                 {
                     int correctIndex = SelectedItemIndex + Settings.MaxHeight;
                     int maxIndex = Items.Count - 1;
 
-                    SelectedItemIndex = correctIndex < maxIndex ? correctIndex : maxIndex;
+                    SetSelectedItemIndex(correctIndex < maxIndex ? correctIndex : maxIndex);
                 }
-                else if (key == Keys.Left)
+                else if (key == Settings.Keys.Left)
                 {
                     int correctIndex = SelectedItemIndex - Settings.MaxHeight;
                     int minIndex = 0;
 
-                    SelectedItemIndex = correctIndex >= minIndex ? correctIndex : minIndex;
+                    SetSelectedItemIndex(correctIndex >= minIndex ? correctIndex : minIndex);
                 }
 
                 // Выбор элемента
-                else if (key == Keys.Accept)
+                else if (key == Settings.Keys.Accept)
                 {
-                    if (Settings.HideMenuAfterSelecting)
-                        Hide(reservePosLeft, reservePosTop);
+                    ConsoleSelectorItem selectedItem = Items[SelectedItemIndex];
 
                     Console.CursorVisible = true;
 
-                    Items[SelectedItemIndex].Action?.Invoke();
+                    if (Settings.HideMenuAfterSelecting)
+                        Hide(reservePosLeft, reservePosTop);
 
-                    return Items[SelectedItemIndex];
+                    if (Settings.ClearItemsAfterSelecting)
+                        Items.Clear();
+
+                    selectedItem.Action?.Invoke();
+
+                    return selectedItem;
                 }
+
+                //else SelectedItemIndex = GetIndexByFirstChar(key.ToString()[0]);
             }
         }
 
@@ -136,38 +132,38 @@ namespace ConsoleToolsCollection.ConsoleSelector
                     continue;
                 }
 
-                int maxTextLength = Console.WindowWidth - Indentations.SelectionRight - Indentations.SelectionLeft;
+                int maxTextLength = Console.WindowWidth - Settings.Indentations.SelectionRight - Settings.Indentations.SelectionLeft;
 
                 bool isActive = SelectedItemIndex == i;
 
                 string modifyedText = string.Concat(
 
                     // Отступ текста
-                    Helpers.StringHelper.Repeat(Indentations.RepeatingLine, Indentations.Text),
+                    Helpers.StringHelper.Repeat(Settings.Indentations.RepeatingLine, Settings.Indentations.Text),
 
                     // Начальные префиксы
-                    Settings.DefaultPrefix, isActive ? Settings.ActivePrefix : Settings.NotActivePrefix,
+                    Settings.Prefixes.DefaultPrefix, isActive ? Settings.Prefixes.ActivePrefix : Settings.Prefixes.NotActivePrefix,
 
                     // Текст
                     Items[i].Title,
 
                     // Конечные префиксы
-                    Settings.FinalString);
+                    Settings.Prefixes.FinalString);
 
                 // Сокращение строки
                 modifyedText = Helpers.StringHelper.TruncateString(modifyedText, maxTextLength);
 
                 // Левый отступ
-                if (Indentations.SelectionLeft != -1)
-                    Console.SetCursorPosition(Indentations.SelectionLeft, Console.CursorTop);
+                if (Settings.Indentations.SelectionLeft != -1)
+                    Console.SetCursorPosition(Settings.Indentations.SelectionLeft, Console.CursorTop);
 
                 // Правый отступ
-                if (Indentations.SelectionRight != -1 && Console.WindowWidth > Indentations.SelectionRight)
-                    modifyedText += Helpers.StringHelper.Repeat(Indentations.RepeatingLine,
-                        Console.WindowWidth - Indentations.SelectionRight - modifyedText.Length - Indentations.SelectionLeft);
+                if (Settings.Indentations.SelectionRight != -1 && Console.WindowWidth > Settings.Indentations.SelectionRight)
+                    modifyedText += Helpers.StringHelper.Repeat(Settings.Indentations.RepeatingLine,
+                        Console.WindowWidth - Settings.Indentations.SelectionRight - modifyedText.Length - Settings.Indentations.SelectionLeft);
 
-                ConsoleColor? foreColor = isActive ? Colors.ActiveForegroundColor : Colors.DefaultForegroundColor;
-                ConsoleColor? backColor = isActive ? Colors.ActiveBackgroundColor : Colors.DefaultBackgroundColor;
+                ConsoleColor? foreColor = isActive ? Settings.Colors.ActiveForegroundColor : Settings.Colors.DefaultForegroundColor;
+                ConsoleColor? backColor = isActive ? Settings.Colors.ActiveBackgroundColor : Settings.Colors.DefaultBackgroundColor;
 
                 ConsoleSelectorItemColors customColors = Items[i].CustomColors;
 
@@ -181,16 +177,47 @@ namespace ConsoleToolsCollection.ConsoleSelector
                 Helpers.ColorConsole.WriteLine(modifyedText, foreColor.Value, backColor.Value);
             }
         }
+
         public void Hide(int reservePosLeft, int reservePosTop)
         {
             Console.SetCursorPosition(reservePosLeft, reservePosTop);
 
             string line = string.Concat('\r', Helpers.StringHelper.Repeat(" ", Console.WindowWidth));
             string text = Helpers.StringHelper.Repeat(line, Settings.MaxHeight);
-
+            
             Console.Write(text);
 
             Console.SetCursorPosition(reservePosLeft, reservePosTop);
+        }
+
+        public void SetSelectedItemIndex(int index)
+        {
+            SelectedItemIndex = index;
+
+            CorrectSelectedItemIndex();
+        }
+
+        private void CorrectSelectedItemIndex()
+        {
+            if (SelectedItemIndex < 0)
+            {
+                SelectedItemIndex = 0;
+            }
+            else if (SelectedItemIndex > Items.Count - 1)
+            {
+                SelectedItemIndex = Items.Count - 1;
+            }
+        }
+
+        private int GetIndexByFirstChar(char c)
+        {
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i].Title[0] == c)
+                    return i;
+            }
+
+            return 0;
         }
     }
 }

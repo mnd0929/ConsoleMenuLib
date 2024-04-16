@@ -13,23 +13,33 @@
         public int MaxHeight { get; set; } = -1;
 
         /// <summary>
-        /// Стандартный префикс для всех элементов
+        /// Указывает, требуется ли сброс индекса при отображении меню
         /// </summary>
-        public string DefaultPrefix { get; set; } = null;
+        public bool ResetIndex { get; set; } = false;
 
         /// <summary>
-        /// Префикс активного элемента
+        /// Указывает, требуется ли очистка элементов после выбора
         /// </summary>
-        public string ActivePrefix { get; set; } = null;
+        public bool ClearItemsAfterSelecting { get; set; } = false;
 
         /// <summary>
-        /// Префикс неактивного элемента
+        /// Цвета элементов в меню
         /// </summary>
-        public string NotActivePrefix { get; set; } = null;
+        public ConsoleSelectorItemColors Colors { get; set; } = new ConsoleSelectorItemColors();
 
         /// <summary>
-        /// Строка идущая после основного текста каждого элемента
+        /// Отступы элементов в меню
         /// </summary>
-        public string FinalString { get; set; } = null;
+        public ConsoleSelectorIndentations Indentations { get; set; } = new ConsoleSelectorIndentations();
+
+        /// <summary>
+        /// Кнопки ответственные за управление в меню
+        /// </summary>
+        public ConsoleSelectorKeys Keys { get; set; } = new ConsoleSelectorKeys();
+
+        /// <summary>
+        /// Префиксы элементов в меню
+        /// </summary>
+        public ConsoleSelectorPrefixes Prefixes { get; set; } = new ConsoleSelectorPrefixes();
     }
 }

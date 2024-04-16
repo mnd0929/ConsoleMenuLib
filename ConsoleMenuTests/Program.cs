@@ -7,7 +7,7 @@ namespace ConsoleMenuTests
 {
     internal class Program
     {
-        static string CurrentDirectory = "C:\\";
+        static string CurrentDirectory = $"{Environment.CurrentDirectory[0]}:\\";
 
         static int AddressBarTop = Console.CursorTop + 1;
         static int AddressBarLeft = Console.CursorLeft + 1;
@@ -18,32 +18,34 @@ namespace ConsoleMenuTests
 
             ConsoleSelector consoleSelector = new ConsoleSelector
             {
-                Indentations = new ConsoleSelectorIndentations
-                {
-                    SelectionRight = 20,
-                    SelectionLeft = 20,
-                    Text = 3
-                },
                 Settings = new ConsoleSelectorSettings
                 {
                     MaxHeight = Console.WindowHeight - 5,
                     HideMenuAfterSelecting = true,
-                },
-                Colors = new ConsoleSelectorItemColors
-                {
-                    DefaultBackgroundColor = ConsoleColor.DarkBlue,
-                    ActiveBackgroundColor = ConsoleColor.White,
+                    ClearItemsAfterSelecting = true,
+                    ResetIndex = false,
 
-                    DefaultForegroundColor = ConsoleColor.White,
-                    ActiveForegroundColor = ConsoleColor.DarkBlue,
-                }
+                    Colors = new ConsoleSelectorItemColors
+                    {
+                        DefaultBackgroundColor = ConsoleColor.DarkBlue,
+                        ActiveBackgroundColor = ConsoleColor.White,
+
+                        DefaultForegroundColor = ConsoleColor.White,
+                        ActiveForegroundColor = ConsoleColor.DarkBlue,
+                    },
+
+                    Indentations = new ConsoleSelectorIndentations
+                    {
+                        SelectionRight = 1,
+                        SelectionLeft = 1,
+                        Text = 3
+                    }
+                },
             };
 
             while (true) 
             {
                 ShowAddressBar();
-
-                consoleSelector.Items.Clear();
 
                 consoleSelector.Items.Add(new ConsoleSelectorItem 
                 {
@@ -64,7 +66,7 @@ namespace ConsoleMenuTests
 
                     foreach (string str in Directory.EnumerateFiles(CurrentDirectory))
                     {
-                        consoleSelector.Items.Add(BuildPathItem(str, consoleSelector.Colors.DefaultForegroundColor));
+                        consoleSelector.Items.Add(BuildPathItem(str, consoleSelector.Settings.Colors.DefaultForegroundColor));
                     }
                 }
                 catch 
@@ -96,8 +98,10 @@ namespace ConsoleMenuTests
 
         static void ShowAddressBar()
         {
+            string address = string.Concat(CurrentDirectory, string.Concat(Enumerable.Repeat(" ", Console.WindowWidth - CurrentDirectory.Length > 0 ? Console.WindowWidth - CurrentDirectory.Length : 0)));
+
             Console.SetCursorPosition(AddressBarLeft, AddressBarTop);
-            Console.WriteLine(string.Concat(CurrentDirectory, string.Concat(Enumerable.Repeat(" ", Console.WindowWidth - CurrentDirectory.Length))));
+            Console.WriteLine(address);
         }
     }
 }
