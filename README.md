@@ -4,22 +4,23 @@
 ```csharp
 ConsoleSelector consoleSelector = new ConsoleSelector
 {
-    Indentations = new ConsoleSelectorIndentations
-    {
-        SelectionRight = 20,
-        SelectionLeft = 20,
-        Text = 3
-    },
     Settings = new ConsoleSelectorSettings
     {
         MaxHeight = 20 // Максимальное колличество одновременно отображаемых элементов на экране. (По умолчанию ображаются все элементы сразу)
+
+        Indentations = new ConsoleSelectorIndentations
+        {
+            SelectionRight = 20,
+            SelectionLeft = 20,
+            Text = 3
+        },
+        Keys = new ConsoleSelectorKeys 
+        {
+            Up = ConsoleKey.W,
+            Down = ConsoleKey.S,
+            Accept = ConsoleKey.Enter
+        }
     },
-    Keys = new ConsoleSelectorKeys 
-    {
-        Up = ConsoleKey.W,
-        Down = ConsoleKey.S,
-        Accept = ConsoleKey.Enter
-    }
 };
 ```
 
