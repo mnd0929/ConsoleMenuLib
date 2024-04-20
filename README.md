@@ -12,6 +12,18 @@ Indentations = new ConsoleSelectorIndentations
 ```
 ![IndentationsDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/7b63caf3-d53b-446b-8ea2-12783da66224)
 
+# Префиксы
+```csharp
+Prefixes = new ConsoleSelectorPrefixes 
+{
+    ActivePrefix = " <1> ",
+    DefaultPrefix = " <2> ",
+    NotActivePrefix = " <3> ",
+    FinalString = " <4> "
+}
+```
+![PrefixesDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/e035c721-8216-4d40-bce4-28017c5a7f37)
+
 
 # Режимы переключения страниц
 
