@@ -24,6 +24,19 @@ Prefixes = new ConsoleSelectorPrefixes
 ```
 ![PrefixesDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/e035c721-8216-4d40-bce4-28017c5a7f37)
 
+# Цвета
+```csharp
+Colors = new ConsoleSelectorItemColors
+{
+    DefaultBackgroundColor = ConsoleColor.DarkBlue,
+    ActiveBackgroundColor = ConsoleColor.White,
+
+    DefaultForegroundColor = ConsoleColor.White,
+    ActiveForegroundColor = ConsoleColor.DarkBlue,
+}
+```
+![ColorsDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/c6cb92d1-b706-42a5-aa41-83979e0bf66c)
+
 
 # Режимы переключения страниц
 
@@ -43,20 +56,19 @@ ConsoleSelector consoleSelector = new ConsoleSelector
 {
     Settings = new ConsoleSelectorSettings
     {
-        MaxHeight = 20 // Максимальное колличество одновременно отображаемых элементов на экране. (По умолчанию ображаются все элементы сразу)
+        MaxHeight = Console.WindowHeight - 5,
+        ClearItemsAfterSelecting = true,
+        ResetIndex = false,                    // Выделение элемента остается после выбора
+        AutoHide = true,                       // Меню автоматически скрывается с консоли после выбора
 
         Indentations = new ConsoleSelectorIndentations
         {
-            SelectionRight = 20,
-            SelectionLeft = 20,
+            SelectionRight = 10,
+            SelectionLeft = 10,
             Text = 3
         },
-        Keys = new ConsoleSelectorKeys 
-        {
-            Up = ConsoleKey.W,
-            Down = ConsoleKey.S,
-            Accept = ConsoleKey.Enter
-        }
+
+        SwitchMode = PageSwitchMode.ElementByElement
     },
 };
 ```
