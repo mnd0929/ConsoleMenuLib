@@ -1,6 +1,6 @@
 # ConsoleMenu
 
-![ElementByElementDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/91924fdc-81b7-4f87-a020-b4cb56044295)
+https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/b7492c6e-b52a-4bd6-9850-c44841504504
 
 **Создание меню**
 ```csharp
