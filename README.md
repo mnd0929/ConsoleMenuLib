@@ -1,6 +1,19 @@
 # ConsoleMenu
 
-**Режимы переключения страниц**
+# Отступы
+
+```csharp
+Indentations = new ConsoleSelectorIndentations
+{
+    SelectionLeft = 10,  // 1
+    SelectionRight = 10, // 2
+    Text = 3             // 3
+}
+```
+![IndentationsDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/7b63caf3-d53b-446b-8ea2-12783da66224)
+
+
+# Режимы переключения страниц
 
 ```csharp
 SwitchMode = PageSwitchMode.ElementByElement
@@ -12,7 +25,7 @@ SwitchMode = PageSwitchMode.PageByPage
 ```
 https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/6a421fd6-bcc2-42ca-b071-02c40ffa7a70
 
-**Создание меню**
+# Создание меню
 ```csharp
 ConsoleSelector consoleSelector = new ConsoleSelector
 {
@@ -37,7 +50,7 @@ ConsoleSelector consoleSelector = new ConsoleSelector
 ```
 
 
-**Добавление элементов**
+# Добавление элементов
 ```csharp
 consoleSelector.Items.Add(new ConsoleSelectorItem($"GitHub", action: () =>
 {
@@ -54,7 +67,7 @@ consoleSelector.Items.Add(new ConsoleSelectorItem
 ```
 
 
-**Отображение меню и получение выбранного элемента**
+# Отображение меню и получение выбранного элемента
 ```csharp
 ConsoleSelectorItem consoleSelectorItem = consoleSelector.Show();
 ```
