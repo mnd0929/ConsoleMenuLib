@@ -1,11 +1,13 @@
-﻿namespace ConsoleToolsCollection.ConsoleSelector
+﻿using System.Diagnostics;
+
+namespace ConsoleToolsCollection.ConsoleSelector
 {
     public class ConsoleSelectorSettings
     {
         /// <summary>
         /// Указывает, нужно ли скрывать меню после выбора
         /// </summary>
-        public bool HideMenuAfterSelecting { get; set; } = true;
+        public bool AutoHide { get; set; } = true;
 
         /// <summary>
         /// Максимальное колличество одновременно отображаемых элементов на экране. (-1 - Отображаются все элементы сразу)
@@ -21,6 +23,11 @@
         /// Указывает, требуется ли очистка элементов после выбора
         /// </summary>
         public bool ClearItemsAfterSelecting { get; set; } = false;
+
+        /// <summary>
+        /// Режим переключения страниц
+        /// </summary>
+        public PageSwitchMode SwitchMode { get; set; } = PageSwitchMode.ElementByElement;
 
         /// <summary>
         /// Цвета элементов в меню
@@ -41,5 +48,20 @@
         /// Префиксы элементов в меню
         /// </summary>
         public ConsoleSelectorPrefixes Prefixes { get; set; } = new ConsoleSelectorPrefixes();
+    }
+
+    public enum PageSwitchMode
+    {
+        /// <summary>
+        /// Если индекс активного элемента выходит за пределы отображаемого меню
+        /// страница сменится на следующую, а индекс на 0
+        /// </summary>
+        PageByPage,
+
+        /// <summary>
+        /// Если индекс активного элемента выходит за пределы отображаемого меню
+        /// индекс останется прежним, а начальный и конечный индекс страницы изменятся на 1
+        /// </summary>
+        ElementByElement
     }
 }

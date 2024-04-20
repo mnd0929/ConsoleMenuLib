@@ -7,10 +7,10 @@ namespace ConsoleMenuTests
 {
     internal class Program
     {
-        static string CurrentDirectory = $"{Environment.CurrentDirectory[0]}:\\";
+        static string CurrentDirectory = $"C:\\";
 
         static int AddressBarTop = Console.CursorTop + 1;
-        static int AddressBarLeft = Console.CursorLeft + 1;
+        static int AddressBarLeft = Console.CursorLeft + 2;
 
         static void Main(string[] args)
         {
@@ -21,7 +21,7 @@ namespace ConsoleMenuTests
                 Settings = new ConsoleSelectorSettings
                 {
                     MaxHeight = Console.WindowHeight - 5,
-                    HideMenuAfterSelecting = true,
+                    AutoHide = true,
                     ClearItemsAfterSelecting = true,
                     ResetIndex = false,
 
@@ -36,10 +36,12 @@ namespace ConsoleMenuTests
 
                     Indentations = new ConsoleSelectorIndentations
                     {
-                        SelectionRight = 1,
-                        SelectionLeft = 1,
+                        SelectionRight = 2,
+                        SelectionLeft = 2,
                         Text = 3
-                    }
+                    },
+
+                    SwitchMode = PageSwitchMode.ElementByElement
                 },
             };
 

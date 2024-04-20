@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System;
-using System.Reflection;
 
 namespace ConsoleToolsCollection.ConsoleSelector
 {
@@ -22,14 +21,19 @@ namespace ConsoleToolsCollection.ConsoleSelector
         public int SelectedItemIndex { get; set; } = 0;
 
         /// <summary>
-        /// Колличество страниц (Если Settings.MaxHeight > 0)
+        /// Колличество страниц (Если Settings.MaxHeight > 0 && SwitchMode == PageSwitchMode.PageByPage)
         /// </summary>
         public int PagesCount { get; private set; } = 0;
 
         /// <summary>
-        /// Текущая страница (Если Settings.MaxHeight > 0)
+        /// Текущая страница (Если Settings.MaxHeight > 0 && SwitchMode == PageSwitchMode.PageByPage)
         /// </summary>
         public int CurrentPage { get; set; } = 0;
+
+        /// <summary>
+        /// Смещение первого и последнего индекса страницы
+        /// </summary>
+        public int PageOffset { get; private set; } = 0;
 
         /// <summary>
         /// Показать меню, дождаться выбора и вернуть выбранный элемент
@@ -88,7 +92,7 @@ namespace ConsoleToolsCollection.ConsoleSelector
 
                     Console.CursorVisible = true;
 
-                    if (Settings.HideMenuAfterSelecting)
+                    if (Settings.AutoHide)
                         Hide(reservePosLeft, reservePosTop);
 
                     if (Settings.ClearItemsAfterSelecting)
@@ -107,11 +111,34 @@ namespace ConsoleToolsCollection.ConsoleSelector
         {
             if (Settings.MaxHeight != -1 && Settings.MaxHeight != 0)
             {
-                PagesCount = Items.Count % Settings.MaxHeight == 0 ? Items.Count / Settings.MaxHeight : Items.Count / Settings.MaxHeight + 1;
-                CurrentPage = SelectedItemIndex / Settings.MaxHeight;
+                int startIndex = 0;
+                int finishIndex = Items.Count - 1;
 
-                int startIndex = CurrentPage * Settings.MaxHeight;
-                int finishIndex = startIndex + Settings.MaxHeight;
+                switch (Settings.SwitchMode)
+                {
+                    case PageSwitchMode.PageByPage:
+                        {
+                            PagesCount = Items.Count % Settings.MaxHeight == 0 ? Items.Count / Settings.MaxHeight : Items.Count / Settings.MaxHeight + 1;
+                            CurrentPage = SelectedItemIndex / Settings.MaxHeight;
+
+                            startIndex = CurrentPage * Settings.MaxHeight;
+                            finishIndex = startIndex + Settings.MaxHeight;
+                        }
+                        break;
+
+                    case PageSwitchMode.ElementByElement:
+                        {
+                            if (SelectedItemIndex < PageOffset)
+                                PageOffset--;
+
+                            if (SelectedItemIndex > PageOffset + Settings.MaxHeight - 1)
+                                PageOffset++;
+
+                            startIndex = PageOffset;
+                            finishIndex = Settings.MaxHeight + PageOffset;
+                        }
+                        break;
+                }
 
                 ShowRange(startIndex, finishIndex);
             }
