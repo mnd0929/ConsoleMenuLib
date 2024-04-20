@@ -1,4 +1,4 @@
-# ConsoleMenu
+**Документация актуальна для версии 1.3.0**
 
 # Отступы
 
@@ -82,12 +82,18 @@ consoleSelector.Items.Add(new ConsoleSelectorItem($"GitHub", action: () =>
 }));
 ```
 ```csharp
-consoleSelector.Items.Add(new ConsoleSelectorItem 
+ConsoleSelectorItem githubItem = new ConsoleSelectorItem 
 {
     Title = "GitHub",
     Description = "Открыть GitHub",
-    Tag = "https://github.com/"
-});
+    Tag = "https://github.com/",
+    CustomColors = new ConsoleSelectorItemColors
+    {
+        DefaultForegroundColor = ConsoleColor.Blue
+    }
+};
+
+consoleSelector.Items.Add(githubItem);
 ```
 
 
