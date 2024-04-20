@@ -1,5 +1,7 @@
 # ConsoleMenu
 
+![ElementByElementDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/91924fdc-81b7-4f87-a020-b4cb56044295)
+
 **Создание меню**
 ```csharp
 ConsoleSelector consoleSelector = new ConsoleSelector
