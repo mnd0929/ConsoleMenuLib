@@ -1,6 +1,6 @@
-**Документация актуальна для версии 1.3.0**
+**Documentation is current for version 1.3.0**
 
-# Отступы
+# Indentations
 
 ```csharp
 Indentations = new ConsoleSelectorIndentations
@@ -12,7 +12,7 @@ Indentations = new ConsoleSelectorIndentations
 ```
 ![IndentationsDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/7b63caf3-d53b-446b-8ea2-12783da66224)
 
-# Префиксы
+# Prefixes
 ```csharp
 Prefixes = new ConsoleSelectorPrefixes 
 {
@@ -24,7 +24,7 @@ Prefixes = new ConsoleSelectorPrefixes
 ```
 ![PrefixesDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/e035c721-8216-4d40-bce4-28017c5a7f37)
 
-# Цвета
+# Colors
 ```csharp
 Colors = new ConsoleSelectorItemColors
 {
@@ -38,7 +38,7 @@ Colors = new ConsoleSelectorItemColors
 ![ColorsDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/c6cb92d1-b706-42a5-aa41-83979e0bf66c)
 
 
-# Режимы переключения страниц
+# Page switching modes
 
 ```csharp
 SwitchMode = PageSwitchMode.ElementByElement
@@ -50,7 +50,7 @@ SwitchMode = PageSwitchMode.PageByPage
 ```
 https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/6a421fd6-bcc2-42ca-b071-02c40ffa7a70
 
-# Создание меню
+# Creating a menu
 ```csharp
 ConsoleSelector consoleSelector = new ConsoleSelector
 {
@@ -74,7 +74,7 @@ ConsoleSelector consoleSelector = new ConsoleSelector
 ```
 
 
-# Добавление элементов
+# Adding Elements
 ```csharp
 consoleSelector.Items.Add(new ConsoleSelectorItem($"GitHub", action: () =>
 {
@@ -97,7 +97,7 @@ consoleSelector.Items.Add(githubItem);
 ```
 
 
-# Отображение меню и получение выбранного элемента
+# Displaying the menu and getting the selected item
 ```csharp
 ConsoleSelectorItem consoleSelectorItem = consoleSelector.Show();
 ```
