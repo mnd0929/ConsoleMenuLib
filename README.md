@@ -2,6 +2,7 @@
 
 # Indentations
 
+![IndentationsDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/7b63caf3-d53b-446b-8ea2-12783da66224)
 ```csharp
 Indentations = new ConsoleSelectorIndentations
 {
@@ -10,9 +11,10 @@ Indentations = new ConsoleSelectorIndentations
     Text = 3             // 3
 }
 ```
-![IndentationsDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/7b63caf3-d53b-446b-8ea2-12783da66224)
+
 
 # Prefixes
+![PrefixesDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/e035c721-8216-4d40-bce4-28017c5a7f37)
 ```csharp
 Prefixes = new ConsoleSelectorPrefixes 
 {
@@ -22,9 +24,10 @@ Prefixes = new ConsoleSelectorPrefixes
     FinalString = " <4> "
 }
 ```
-![PrefixesDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/e035c721-8216-4d40-bce4-28017c5a7f37)
+
 
 # Colors
+![ColorsDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/c6cb92d1-b706-42a5-aa41-83979e0bf66c)
 ```csharp
 Colors = new ConsoleSelectorItemColors
 {
@@ -35,20 +38,21 @@ Colors = new ConsoleSelectorItemColors
     ActiveForegroundColor = ConsoleColor.DarkBlue,
 }
 ```
-![ColorsDemo](https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/c6cb92d1-b706-42a5-aa41-83979e0bf66c)
+
 
 
 # Page switching modes
 
+https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/b7492c6e-b52a-4bd6-9850-c44841504504
 ```csharp
 SwitchMode = PageSwitchMode.ElementByElement
 ```
-https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/b7492c6e-b52a-4bd6-9850-c44841504504
 
+https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/6a421fd6-bcc2-42ca-b071-02c40ffa7a70
 ```csharp
 SwitchMode = PageSwitchMode.PageByPage
 ```
-https://github.com/mnd0929/ConsoleMenuLib/assets/92184643/6a421fd6-bcc2-42ca-b071-02c40ffa7a70
+
 
 # Creating a menu
 ```csharp
