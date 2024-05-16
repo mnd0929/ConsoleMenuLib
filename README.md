@@ -33,7 +33,6 @@ Colors = new ConsoleSelectorItemColors
 {
     DefaultBackgroundColor = ConsoleColor.DarkBlue,
     ActiveBackgroundColor = ConsoleColor.White,
-
     DefaultForegroundColor = ConsoleColor.White,
     ActiveForegroundColor = ConsoleColor.DarkBlue,
 }
