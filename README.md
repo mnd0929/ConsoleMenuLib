@@ -61,8 +61,8 @@ ConsoleSelector consoleSelector = new ConsoleSelector
     {
         MaxHeight = Console.WindowHeight - 5,
         ClearItemsAfterSelecting = true,
-        ResetIndex = false,                    // Выделение элемента остается после выбора
-        AutoHide = true,                       // Меню автоматически скрывается с консоли после выбора
+        ResetIndex = false,                    // The element's highlight remains after selection
+        AutoHide = true,                       // The menu is automatically hidden from the console after selection.
 
         Indentations = new ConsoleSelectorIndentations
         {
